@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>問題選項</title>
+    <style>
+        /* 全局樣式 */
+        body {
+            background: #fff0f5;  /* 淺粉紅色背景 */
+            font-family: 'Segoe UI', sans-serif;
+            text-align: center;
+            padding: 50px;
+        }
+
+        h1 {
+            color: #ff69b4;  /* 粉紅色標題 */
+        }
+
+        .question-box {
+            margin-top: 30px;
+            background: #ffeef8;  /* 淺粉紅色背景 */
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+        }
+
+        .option {
+            display: block;
+            margin: 10px 0;
+            padding: 10px 20px;
+            background: #ffb6c1;  /* 淺粉紅色選項 */
+            color: #fff;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .option:hover {
+            background: #ff69b4;  /* 懸停變為粉紅色 */
+        }
+
+        /* 訊息樣式 */
+        #message {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .correct {
+            color: #388e3c;  /* 正確答案顯示綠色 */
+        }
+
+        .incorrect {
+            color: #d32f2f;  /* 錯誤答案顯示紅色 */
+        }
+
+        /* 隱藏樣式 */
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>司律考試模擬題</h1>
+    <p>共4題，請仔細作答。全部答對才可以拆禮物哦~祝作答愉快！</p>
+
+    <!-- 問題區域 -->
+    <div class="question-box" id="question1">
+        <p>Lola 跟 Vivian 有沒有溜冰成功？</p>
+        <div class="option" onclick="checkAnswer(1, 'wrong')">a. 沒有</div>
+        <div class="option" onclick="checkAnswer(1, 'wrong')">b. 好像有，還一起去滑十圈</div>
+        <div class="option" onclick="checkAnswer(1, 'correct')">c. 沒有，先跑去吃花娘小館了</div>
+        <p id="message1" class="message"></p>
+    </div>
+
+    <div class="question-box hidden" id="question2">
+        <p>Lola 跟 Vivian 一起去台中幾次？</p>
+        <div class="option" onclick="checkAnswer(2, 'correct')">a. 2次</div>
+        <div class="option" onclick="checkAnswer(2, 'wrong')">b. 1次</div>
+        <div class="option" onclick="checkAnswer(2, 'wrong')">c. 3次</div>
+        <p id="message2" class="message"></p>
+    </div>
+
+    <div class="question-box hidden" id="question3">
+        <p>哪個是最符合 Lola 的敘述？</p>
+        <div class="option" onclick="checkAnswer(3, 'wrong')">a. 隔壁的漂亮大姐姐</div>
+        <div class="option" onclick="checkAnswer(3, 'wrong')">b. 對面的氣質小姐姐</div>
+        <div class="option" onclick="checkAnswer(3, 'correct')">c. 以上皆是</div>
+        <p id="message3" class="message"></p>
+    </div>
+
+    <div class="question-box hidden" id="question4">
+        <p>有28個優點的朋友是哪位？</p>
+        <div class="option" onclick="checkAnswer(4, 'wrong')">a. 漂亮的 Vivian</div>
+        <div class="option" onclick="checkAnswer(4, 'correct')">b. 幽默的 Vivian</div>
+        <div class="option" onclick="checkAnswer(4, 'wrong')">c. 機智的 Vivian</div>
+        <p id="message4" class="message"></p>
+    </div>
+
+    <script>
+        let currentQuestion = 1;  // 目前顯示的問題編號
+
+        function checkAnswer(questionId, selectedAnswer) {
+            var message = document.getElementById(`message${questionId}`);
+
+            // 清除之前的訊息和樣式
+            message.textContent = "";
+            message.removeAttribute("class");
+
+            // 根據選擇的答案顯示訊息
+            if (selectedAnswer === "correct") {
+                message.textContent = "🎁 太聰明啦~恭喜答對！🎉";
+                message.classList.add("correct");
+                // 正確答案後顯示下一題
+                setTimeout(() => {
+                    showNextQuestion(questionId);
+                }, 1000);
+            } else {
+                message.textContent = "🥺不對不對~再試一次！";
+                message.classList.add("incorrect");
+            }
+        }
+
+        function showNextQuestion(current) {
+            // 隱藏當前問題
+            document.getElementById(`question${current}`).classList.add("hidden");
+            // 顯示下一題
+            currentQuestion++;
+            if (currentQuestion <= 4) {
+                document.getElementById(`question${currentQuestion}`).classList.remove("hidden");
+            } else {
+                alert("恭喜你完成所有問題！");
+            }
+        }
+
+        // 頁面加載時顯示第一題
+        showNextQuestion(0);
+    </script>
+</body>
+</html>
+
+
