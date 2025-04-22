@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>生日小遊戲卡片</title>
+    <style>
+        body {
+            background: #fff0f5;
+            font-family: 'Segoe UI', sans-serif;
+            text-align: center;
+            padding: 50px;
+        }
+
+        h1 {
+            color: #ff69b4;
+        }
+
+        .question-box {
+            margin-top: 30px;
+            background: #ffeef8;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+        }
+
+        .option {
+            display: block;
+            margin: 10px 0;
+            padding: 10px 20px;
+            background: #ffb6c1;
+            color: #fff;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .option:hover {
+            background: #ff69b4;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .gift-box {
+            margin-top: 30px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>司律考試模擬題</h1>
+    <p>共4題，請仔細作答。祝作答愉快！</p>
+
+    <!-- 問題區 -->
+    <div class="question-box" id="quiz">
+        <div id="question">Lola 跟 Vivian 有沒有滑雪成功？</div>
+        <div class="option" onclick="checkAnswer(0)">a. 沒有</div>
+        <div class="option" onclick="checkAnswer(1)">b. 好像有，還一起去滑十圈</div>
+        <div class="option" onclick="checkAnswer(2)">c. 沒有，跑去吃花娘小館了</div>
+    </div>
+
+    <!-- 禮物區 -->
+    <div class="gift-box hidden" id="gift-box">
+        <h2>🎁 恭喜答對！🎉</h2>
+        <p>祝 Lola 生日➕畢業快樂！</p>
+    </div>
+
+    <script>
+        const questions = [
+            { q: "Lola 跟 Vivian 有沒有滑雪成功？", a: 2 },  // 第一題的正確答案是 c
+            { q: "Lola 跟 Vivian 一起去台中幾次？", a: 0 },  // 第二題的正確答案是 a
+            { q: "哪個是最符合 Lola 的敘述？", a: 2 },  // 第三題的正確答案是 c
+            { q: "有28個優點的朋友是哪位？", a: 1 }   // 第四題的正確答案是 b
+        ];
+
+        const options = [
+            ["a. 沒有", "b. 好像有，還一起去滑十圈", "c. 沒有，跑去吃花娘小館了"],
+            ["a. 2次", "b. 1次", "c. 3次"],
+            ["a. 隔壁的漂亮大姐姐。", "b. 對面的氣質小姐姐。", "c. 以上皆是"],
+            ["a. 漂亮的 Vivian", "b. 幽默的 Vivian", "c. 機智的 Vivian"]
+        ];
+
+        let current = 0;
+        let correctAnswers = 0;
+
+        function checkAnswer(selected) {
+            // 如果選擇正確
+            if (selected === questions[current].a) {
+                correctAnswers++;
+            }
+
+            current++;
+
+            // 如果答完所有問題
+            if (current === questions.length) {
+                // 如果所有題目都答對
+                if (correctAnswers === questions.length) {
+                    document.getElementById("gift-box").classList.remove("hidden");
+                    document.getElementById("quiz").style.display = "none";
+                } else {
+                    alert("司律考試不及格，請再挑戰一次！");
+                }
+            } else {
+                // 顯示下一題
+                showNextQuestion();
+            }
+        }
+
+        function showNextQuestion() {
+            const qBox = document.getElementById("quiz");
+            qBox.innerHTML = `<div id="question">${questions[current].q}</div>` + options[current].map((opt, idx) => `
+                <div class="option" onclick="checkAnswer(${idx})">${opt}</div>
+            `).join('');
+        }
+    </script>
+</body>
+
+</html>
